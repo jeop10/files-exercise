@@ -1,62 +1,85 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+# Files Exercise
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+![alt text](screenshot.png)
 
-## About Laravel
+This a little Laravel app, given a file, will calculate the sum of all the integers and will do it recursively
+on any other file pointed.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Installation:
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+To install the app make sure to have `PHP 7.4` and `composer` installed on your machine, and follow these steps:
+- Clone this repo, `git clone https://github.com/jeop10/files-exercise.git`
+- Run `composer install`
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+After that you should be able to execute the following task
 
-## Learning Laravel
+```
+php artisan code:readfile a.txt
+```
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+Where the `a.txt` is the first valid file for the app to search on. **Only .txt files are supported**
+and the files **must be placed on the root of the directory**
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+After the app have finish running you will see in the console an output with the sum of the integers found and as well 
+as the results of the other files found.
 
-## Laravel Sponsors
+---
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+## Example:
 
-### Premium Partners
+Let's say that we have 3 files: `a.txt`, `b.txt`, `c.txt` and their contents are:
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
+```
+file: a.txt
 
-## Contributing
+3
+19
+b.txt
+50
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+```
+file: b.txt
 
-## Code of Conduct
+c.txt
+27
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+```
+file: c.txt
 
-## Security Vulnerabilities
+10
+12
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+The result of the app will be:
 
-## License
+```
++----------+--------+
+| Filename | Result |
++----------+--------+
+| a.txt    | 72     |
+| b.txt    | 27     |
+| c.txt    | 22     |
++----------+--------+
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+---
+
+## Internals.
+
+This app works as an `artisan command`, so all the logics reside inside the `app/Console/Commands/ReadFile.php` 
+due to the fact of its small business logic.
+
+By using Laravel I took advantage of all the components that this framework provides.
+
+Also, for debugging purposes an `-v` option is accepted on this command.
+
+---
+
+## Considerations and Improvements 
+
+To improve this app, here is a list a possible recommendations:
+- Support files that are in any location, not only on the root directory.
+- Store the results of the `artisan command` into a `results.txt` file to give the user another way of saving the output.
+- Support multiple extensions, not just .txt
